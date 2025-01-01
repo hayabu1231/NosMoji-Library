@@ -85,6 +85,26 @@ hr {
     display: none;
 }
 
+#dialog-login {
+    margin: auto;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: rgb(255 255 255 / 0.99);
+}
+#dialog-login-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ddd;
+    border: none;
+    border-radius: 15px;
+    padding: 2px 15px;
+    gap: 5px;
+    color: #000;
+    font-weight: bold;
+    font-size: 16px;
+}
 #dialog-pack_info {
     position: fixed;
     top: 0;
@@ -96,7 +116,6 @@ hr {
     margin: auto;
     padding: 10px;
     border: none;
-    border-radius: 10px;
     background: rgb(255 255 255 / 0.99);
     overflow-x: hidden;
 }

@@ -31,6 +31,7 @@ window.addEventListener('error', (event) => {
 });
 
 document.addEventListener("DOMContentLoaded", (event) => {
+    document.getElementById('dialog-login').showModal();
     for (let i = 0; i < Pages.length; i++) {
         document.getElementById('open-' + Pages[i].id).addEventListener('click', function() {
             for (let k = 0; k < Pages.length; k++) {
@@ -42,6 +43,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
         });
         document.getElementById('open-' + Pages[i].id).dataset.id = Pages[i].id;
     }
+    document.getElementById('dialog-login-btn').addEventListener('click', function() {
+        if (window.nostr) {
+            window.nostr.getPublicKey().then((pubkey) => {
+                Account.nip_07 = true;
+                Account.npub_converted = pubkey;
+                EMOJI.getUser();
+                document.getElementById('dialog-login').close();
+            });
+        } else {
+            addConsoleContent({status: 'error', message:'NIP-07の拡張機能が認識できませんでした。'});
+        }
+    });
     document.getElementById('dialog-pack_info-add').addEventListener('click', function() {
         if (this.dataset.status == 'unadded') {
             EMOJI.install(this.dataset.id);
@@ -170,17 +183,17 @@ function setEmojiPack(pack) {
     }
     
     if (document.getElementById('pack-list-new').children.length == 0) {
-        document.getElementById('pack-list-new-status').innerText = 'まだ読み込まれていません。';
+        document.getElementById('pack-list-new-status').innerText = 'このリストに対応するアイテムは0個です。';
     } else {
         document.getElementById('pack-list-new-status').innerText = '';
     }
     if (document.getElementById('pack-list-mypack').children.length == 0) {
-        document.getElementById('pack-list-mypack-status').innerText = 'まだ読み込まれていません。';
+        document.getElementById('pack-list-mypack-status').innerText = 'このリストに対応するアイテムは0個です。';
     } else {
         document.getElementById('pack-list-mypack-status').innerText = '';
     }
     if (document.getElementById('pack-list-mylist').children.length == 0) {
-        document.getElementById('pack-list-mylist-status').innerText = 'まだ読み込まれていません。';
+        document.getElementById('pack-list-mylist-status').innerText = 'このリストに対応するアイテムは0個です。';
     } else {
         document.getElementById('pack-list-mylist-status').innerText = '';
     }
@@ -390,6 +403,27 @@ const EMOJI = {
                 tags.push(['a', Account.following_emoji_packs[i]]);
             }
             tags.push(['a', emoji]);
+            window.nostr.signEvent({
+                created_at: nowdate,
+                kind: 10030,
+                tags: tags,
+                content: ''
+            }).then(function (event) {
+                connection2.add({body: JSON.stringify(['EVENT', event])});
+            });
+        } else {
+            addConsoleContent({status: 'error', message:'NIP-07の拡張機能が認識できませんでした。'});
+        }
+    },
+    uninstall(emoji) {
+        if (Account.nip_07) {
+            var nowdate = Math.floor(new Date().getTime() / 1000);
+            var tags = [];
+            for (let i = 0; i < Account.following_emoji_packs.length; i++) {
+                if (emoji != Account.following_emoji_packs[i]) {
+                    tags.push(['a', Account.following_emoji_packs[i]]);
+                }
+            }
             window.nostr.signEvent({
                 created_at: nowdate,
                 kind: 10030,
