@@ -154,11 +154,11 @@ function setEmojiPack(pack) {
     }
     if (
         Account.npub_converted == pack.author.id &&
-        document.getElementById(`${pack.id}-myset`)
+        document.getElementById(`${pack.id}-mypack`)
     ) {
-        document.getElementById(`${pack.id}-myset`).replaceWith(createPackElement(pack, 'myset'));
+        document.getElementById(`${pack.id}-mypack`).replaceWith(createPackElement(pack, 'mypack'));
     } else if (Account.npub_converted == pack.author.id) {
-        document.getElementById('pack-list-myset').append(createPackElement(pack, 'myset'));
+        document.getElementById('pack-list-mypack').append(createPackElement(pack, 'mypack'));
     }
     if (
         Account.following_emoji_packs.includes(pack.id) &&
@@ -167,6 +167,22 @@ function setEmojiPack(pack) {
         document.getElementById(`${pack.id}-mylist`).replaceWith(createPackElement(pack, 'mylist'));
     } else if (Account.following_emoji_packs.includes(pack.id)) {
         document.getElementById('pack-list-mylist').append(createPackElement(pack, 'mylist'));
+    }
+    
+    if (document.getElementById('pack-list-new').children.length == 0) {
+        document.getElementById('pack-list-new-status').innerText = 'まだ読み込まれていません。';
+    } else {
+        document.getElementById('pack-list-new-status').innerText = '';
+    }
+    if (document.getElementById('pack-list-mypack').children.length == 0) {
+        document.getElementById('pack-list-mypack-status').innerText = 'まだ読み込まれていません。';
+    } else {
+        document.getElementById('pack-list-mypack-status').innerText = '';
+    }
+    if (document.getElementById('pack-list-mylist').children.length == 0) {
+        document.getElementById('pack-list-mylist-status').innerText = 'まだ読み込まれていません。';
+    } else {
+        document.getElementById('pack-list-mylist-status').innerText = '';
     }
 }
 
