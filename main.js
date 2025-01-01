@@ -199,8 +199,8 @@ class Server {
                     if (emojis.length > 0) {
                         for (var i = 0; i < emojis.length; i++) {
                             Account.following_emoji_packs.push(emojis[i][1]);
-                            if (Packs.has(emojis[i][1])) {
-                                setEmojiPack(Packs.get(emojis[i][1]));
+                            if (EmojiPacks.has(emojis[i][1])) {
+                                setEmojiPack(EmojiPacks.get(emojis[i][1]));
                             } else {
                                 emoji_authors.push(emojis[i][1].split(':')[1]);
                                 emoji_names.push(emojis[i][1].split(':')[2]);
