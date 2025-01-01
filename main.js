@@ -137,8 +137,8 @@ function createPackElement(pack, list) {
         document.getElementById('dialog-pack_info-emojis').replaceChildren(...emoji_elements);
         document.getElementById('dialog-pack_info').scroll(0,0);
         document.getElementById('dialog-pack_info').show();
-    }, `30030:${pack.name}:${pack.author.id}-${list}`);
-    element.dataset.id = `30030:${pack.name}:${pack.author.id}`;
+    }, `${pack.id}-${list}`);
+    element.dataset.id = pack.id;
     element.append(createElement('img', pack.icon, 'list-pack-icon'));
     element.append(createElement('p', pack.name, 'list-pack-name'));
     element.append(createElement('small', pack.author.name, 'list-pack-author'));
@@ -146,26 +146,26 @@ function createPackElement(pack, list) {
 }
 
 function setEmojiPack(pack) {
-    EmojiPacks.set(`30030:${pack.name}:${pack.author.id}`, pack);
-    if (document.getElementById(`30030:${pack.name}:${pack.author.id}-new`)) {
-        document.getElementById(`30030:${pack.name}:${pack.author.id}-new`).replaceWith(createPackElement(pack, 'new'));
+    EmojiPacks.set(pack.id, pack);
+    if (document.getElementById(`${pack.id}-new`)) {
+        document.getElementById(`${pack.id}-new`).replaceWith(createPackElement(pack, 'new'));
     } else {
         document.getElementById('pack-list-new').append(createPackElement(pack, 'new'));
     }
     if (
         Account.npub_converted == pack.author.id &&
-        document.getElementById(`30030:${pack.name}:${pack.author.id}-myset`)
+        document.getElementById(`${pack.id}-myset`)
     ) {
-        document.getElementById(`30030:${pack.name}:${pack.author.id}-myset`).replaceWith(createPackElement(pack, 'myset'));
+        document.getElementById(`${pack.id}-myset`).replaceWith(createPackElement(pack, 'myset'));
     } else if (Account.npub_converted == pack.author.id) {
         document.getElementById('pack-list-myset').append(createPackElement(pack, 'myset'));
     }
     if (
-        Account.following_emoji_packs.includes(`30030:${pack.name}:${pack.author.id}`) &&
-        document.getElementById(`30030:${pack.name}:${pack.author.id}-mylist`)
+        Account.following_emoji_packs.includes(pack.id) &&
+        document.getElementById(`${pack.id}-mylist`)
     ) {
-        document.getElementById(`30030:${pack.name}:${pack.author.id}-mylist`).replaceWith(createPackElement(pack, 'mylist'));
-    } else if (Account.following_emoji_packs.includes(`30030:${pack.name}:${pack.author.id}`)) {
+        document.getElementById(`${pack.id}-mylist`).replaceWith(createPackElement(pack, 'mylist'));
+    } else if (Account.following_emoji_packs.includes(pack.id)) {
         document.getElementById('pack-list-mylist').append(createPackElement(pack, 'mylist'));
     }
 }
@@ -221,6 +221,7 @@ class Server {
                     });
                 } else if (data[2].kind == 30030) {
                     let pack = {
+                        id: '',
                         icon: null,
                         name:  '未設定',
                         author: {
@@ -243,6 +244,7 @@ class Server {
                     if (titles.length > 0) {
                         pack.name = titles[0][1];
                     }
+                    pack.id = `30030:${pack.author.id}:${pack.name}`;
                     var imageS = tagSearch(data[2].tags, 'image');
                     if (imageS.length > 0) {
                         pack.icon = imageS[0][1];
