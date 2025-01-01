@@ -113,7 +113,7 @@ function createPackElement(pack, list) {
         }
         document.getElementById('dialog-pack_info-icon').src = selected_pack.icon;
         document.getElementById('dialog-pack_info-name').innerText = selected_pack.name;
-        document.getElementById('dialog-pack_info-author').innerText = selected_pack.author.id;
+        document.getElementById('dialog-pack_info-author').innerText = selected_pack.author.name;
         document.getElementById('dialog-pack_info-description').innerText = selected_pack.description;
         let emoji_elements = [];
         for (let i = 0; i < selected_pack.emojis.length; i++) {
@@ -126,7 +126,7 @@ function createPackElement(pack, list) {
     element.dataset.id = `30030:${pack.name}:${pack.author.id}`;
     element.append(createElement('img', pack.icon, 'list-pack-icon'));
     element.append(createElement('p', pack.name, 'list-pack-name'));
-    element.append(createElement('small', pack.author.id, 'list-pack-author'));
+    element.append(createElement('small', pack.author.name, 'list-pack-author'));
      return element;
 }
 
@@ -180,11 +180,17 @@ class Server {
                         icon: null,
                         name:  '未設定',
                         author: {
-                            id: data[2].pubkey
+                            id: data[2].pubkey,
+                            name: data[2].pubkey
                         },
                         description: 'このセットには説明文が用意されていません。',
                         emojis: []
                     };
+                    if (Users.has(new_user.id)) {
+                        pack.author = Users.get(new_user.id);
+                    } else {
+                        USER.get(new_user.id);
+                    }
                     var d = tagSearch(data[2].tags, 'd');
                     if (d.length > 0) {
                         pack.name = d[0][1];
@@ -354,6 +360,63 @@ const EMOJI = {
         } else {
             addConsoleContent({status: 'error', message:'NIP-07の拡張機能が認識できませんでした。'});
         }
+    }
+};
+
+const USER = {
+    toHYB: function(old_user) {
+        old_user.content = JSON.parse(old_user.content);
+        var new_user = {
+            id: old_user.pubkey,
+            name: old_user.content.name,
+            avatar: old_user.content.picture,
+            timestamp: old_user.created_at * 1000
+        };
+        if (!new_user.username) {
+            new_user.name = `${old_user.pubkey.slice(0, 7)}…`;
+        }
+        if (
+            Users.has(new_user.id) &&
+            Users.get(new_user.id).timestamp &&
+            new Date(Users.get(new_user.id).timestamp) > new Date(new_user.timestamp)
+        ) {
+            new_user = Users.get(new_user.id);
+        }
+        Users.set(new_user.id, new_user);
+        EmojiPacks.forEach((pack) => {
+            if (pack.author.id == new_user.id) {
+                pack.author = new_user;
+                EmojiPacks.set(`30030:${pack.name}:${pack.author.id}`, pack);
+                if (document.getElementById(`30030:${pack.name}:${pack.author.id}-new`)) {
+                    document.getElementById(`30030:${pack.name}:${pack.author.id}-new`).replaceWith(createPackElement(pack, 'new'));
+                } else {
+                    document.getElementById('pack-list-new').append(createPackElement(pack, 'new'));
+                }
+                if (
+                    Account.npub_converted == pack.author.id &&
+                    document.getElementById(`30030:${pack.name}:${pack.author.id}-myset`)
+                ) {
+                    document.getElementById(`30030:${pack.name}:${pack.author.id}-myset`).replaceWith(createPackElement(pack, 'myset'));
+                } else if (Account.npub_converted == pack.author.id) {
+                    document.getElementById('pack-list-myset').append(createPackElement(pack, 'myset'));
+                }
+                if (
+                    Account.following_emoji_packs.includes(`30030:${pack.name}:${pack.author.id}`) &&
+                    document.getElementById(`30030:${pack.name}:${pack.author.id}-mylist`)
+                ) {
+                    document.getElementById(`30030:${pack.name}:${pack.author.id}-mylist`).replaceWith(createPackElement(pack, 'mylist'));
+                } else if (Account.following_emoji_packs.includes(`30030:${pack.name}:${pack.author.id}`)) {
+                    document.getElementById('pack-list-mylist').append(createPackElement(pack, 'mylist'));
+                }
+            }
+        });
+        return new_user;
+    },
+    get(id) {
+         if (!Account.need_users.includes(id)) {
+            Account.need_users.push(id);
+         }
+         return true;
     }
 };
 
