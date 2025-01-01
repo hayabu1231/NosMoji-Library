@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         document.getElementById('dialog-create').close();
     });
     document.getElementById('dialog-create-add').addEventListener('click', function() {
+        document.getElementById('dialog-create').close();
         if (Account.nip_07) {
             var nowdate = Math.floor(new Date().getTime() / 1000);
             var tags = [];
@@ -111,6 +112,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         document.getElementById('dialog-create-emojis').append(block);
     });
     document.getElementById('dialog-pack_info-add').addEventListener('click', function() {
+        document.getElementById('dialog-pack_info').close();
         if (this.dataset.status == 'unadded') {
             EMOJI.install(this.dataset.id);
         } else if (this.dataset.status == 'added') {
