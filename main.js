@@ -201,10 +201,10 @@ class Server {
                         description: 'このセットには説明文が用意されていません。',
                         emojis: []
                     };
-                    if (Users.has(new_user.id)) {
-                        pack.author = Users.get(new_user.id);
+                    if (Users.has(pack.author.id)) {
+                        pack.author = Users.get(pack.author.id);
                     } else {
-                        USER.get(new_user.id);
+                        USER.get(pack.author.id);
                     }
                     var d = tagSearch(data[2].tags, 'd');
                     if (d.length > 0) {
