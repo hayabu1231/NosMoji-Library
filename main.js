@@ -64,6 +64,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
     });
     EMOJI.getAll();
 });
+setInterval(function() {
+    if (Account.need_users.length > 0){
+        connection2.add({
+            body: JSON.stringify([
+                'REQ',
+                `${Account.users_event_id}`,
+                {
+                    authors: Account.need_users,
+                    kinds: [0],
+                    limit: 20
+                }
+            ])
+        });
+    }
+}, 10000);
 
 function addConsoleContent(data) {
     document.getElementById('console').append(createElement('div', `${data.status}:${data.message}`));
