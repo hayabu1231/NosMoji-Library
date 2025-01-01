@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>NosMoji Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+    <script src="main.js"></script>
+</head>
+<body>
+<header>
+    <h1>NosMoji Library</h1>
+    <menu class="header-menu">
+        <button id="open-home" data-selected=true><li>ホーム</li></button>
+        <button id="open-myset"><li>マイセット</li></button>
+        <button id="open-mylist"><li>マイリスト</li></button>
+    </menu>
+</header>
+<main id="main-home">
+    <h2>ようこそ！</h2>
+    <p>
+        「NosMoji Library」へようこそ！<br>
+        ここでは、Nostrで他のユーザーが登録した絵文字セットを自分の絵文字リストに追加したり、新たな絵文字セットを作成する(注1)ことができます！<br>
+        素敵な絵文字を見つけて、自分好みな絵文字リストを作成しましょう！<br>
+        (注1)現在、新規登録機能は準備中です！
+    </p>
+    <h2>新着絵文字セット一覧</h2>
+    <div id="pack-list-new" class="pack-list">
+    </div>
+</main>
+<main id="main-myset">
+    <h2>マイ絵文字セット一覧</h2>
+    <div id="pack-list-mypack" class="pack-list">
+    </div>
+</main>
+<main id="main-mylist">
+    <h2>マイ絵文字リスト</h2>
+    <div id="pack-list-mylist" class="pack-list">
+    </div>
+</main>
+
+<dialog id="dialog-pack_info">
+    <div id="dialog-pack_info-menu">
+        <input id="dialog-pack_info-add" type="image" src="img/add.svg" alt="追加">
+        <input id="dialog-pack_info-close" type="image" src="img/close.svg" alt="閉じる">
+    </div>
+    <div id="dialog-pack_info-info">
+        <img id="dialog-pack_info-icon" src="img/NotFound.png">
+        <h3 id="dialog-pack_info-name">セット名</h3>
+        <h4 id="dialog-pack_info-author">作者</h4>
+    </div>
+    <p id="dialog-pack_info-description">セット説明</p>
+    <small id="dialog-pack_info-emojis" class="pack-list"></small>
+</dialog>
+
+<div id="console"></div>
+<footer>
+    <small>&copy;hayabu1231</small>
+</footer>
+
+<div id="resources">
+    <img src="img/NotFound.png">
+    <img src="img/add.svg">
+    <img src="img/added.svg">
+    <img src="img/close.svg">
+    <img src="img/login.svg">
+</div>
+
+</body>
+</html>

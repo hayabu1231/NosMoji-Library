@@ -1,0 +1,147 @@
+* {
+    font-family: system-ui;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h2 {
+    margin: 16px 0 8px 0;
+}
+
+header h1 {
+    padding: 10px;
+    text-align: center;
+}
+.header-menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    list-style: none;
+    width: 100%;
+}
+.header-menu button {
+    color: #000;
+    background: none;
+    border: none;
+    border-radius: 0;
+}
+.header-menu button[data-selected=true] {
+    border-bottom: solid 1px #ddd;
+}
+
+main {
+    padding: 0 10px;
+}
+
+hr {
+    width: 100%;
+    border: solid 0.5px #ddd;
+}
+
+.pack-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 15px;
+}
+.list-pack {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+.list-pack-icon {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    border-radius: 5px;
+}
+.list-pack-name {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+.list-pack-author {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+#console {
+    position: fixed;
+    right: 5px;
+    bottom: 5px;
+    background: rgb(50 50 50 / 0.8);
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px;
+}
+#console:empty {
+    display: none;
+}
+
+#dialog-pack_info {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    width: 100dvw;
+    height: 100vh;
+    height: 100dvh;
+    margin: auto;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: rgb(255 255 255 / 0.99);
+    overflow-x: hidden;
+}
+#dialog-pack_info-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    padding: 5px;
+}
+#dialog-pack_info-close {
+    height: 18px;
+}
+#dialog-pack_info-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    padding-bottom: 5px;
+    gap: 5px;
+    border-bottom: solid 0.5px #ddd;
+}
+#dialog-pack_info-icon {
+    height: 100px;
+    width: 100px;
+    object-fit: contain;
+    border-radius: 5px;
+}
+#dialog-pack_info-author {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#dialog-pack_info-description {
+    padding: 10px 0;
+    color: #888;
+}
+
+footer {
+    padding: 5px;
+    color: #222;
+}
+
+#resources {
+    display: none;
+}
