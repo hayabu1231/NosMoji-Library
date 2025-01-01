@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
             }
             if (document.getElementById('dialog-create-emojis').children.length > 0) {
                 for (let i = 0; i < document.getElementById('dialog-create-emojis').children.length; i++) {
-                    tags.push(['emoji', document.getElementById('dialog-create-emojis').children[i].children[0].innerText, document.getElementById('dialog-create-emojis').children[i].children[1].innerText]);
+                    tags.push(['emoji', document.getElementById('dialog-create-emojis').children[i].children[1].innerText, document.getElementById('dialog-create-emojis').children[i].children[0].innerText]);
                 }
             } else {
                 addConsoleContent({status: 'error', message:'このクライアントでは絵文字なしで絵文字セットを作成することはできません。'});
