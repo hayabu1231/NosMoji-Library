@@ -71,11 +71,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
             if (document.getElementById('dialog-create-name').innerText.length > 0) {
                 tags.push(['title', document.getElementById('dialog-create-name').innerText]);
             }
-            /*
-            if (document.getElementById('dialog-create-icon').innerText.length > 0) {
-                tags.push(['image', document.getElementById('dialog-create-icon').innerText]);
+            if (document.getElementById('dialog-create-icon-url').innerText.length > 0) {
+                tags.push(['image', document.getElementById('dialog-create-icon-url').innerText]);
             }
-            */
             if (document.getElementById('dialog-create-description').innerText.length > 0) {
                 tags.push(['description', document.getElementById('dialog-create-description').innerText]);
             }
@@ -98,6 +96,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
         } else {
             addConsoleContent({status: 'error', message:'NIP-07の拡張機能が認識できませんでした。'});
         }
+    });
+    document.getElementById('dialog-create-icon-url').addEventListener('change', function() {
+        document.getElementById('dialog-create-icon').src = document.getElementById('dialog-create-icon-url').innerText;
     });
     document.getElementById('dialog-create-emojis-add').addEventListener('click', function() {
         let block = createElement('div');
