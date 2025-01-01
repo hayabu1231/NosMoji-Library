@@ -65,21 +65,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
         if (Account.nip_07) {
             var nowdate = Math.floor(new Date().getTime() / 1000);
             var tags = [];
-            if (document.getElementById('dialog-create-id').innerText.length > 0) {
-                tags.push(['d', document.getElementById('dialog-create-id').innerText]);
+            if (document.getElementById('dialog-create-id').value.length > 0) {
+                tags.push(['d', document.getElementById('dialog-create-id').value]);
             }
-            if (document.getElementById('dialog-create-name').innerText.length > 0) {
-                tags.push(['title', document.getElementById('dialog-create-name').innerText]);
+            if (document.getElementById('dialog-create-name').value.length > 0) {
+                tags.push(['title', document.getElementById('dialog-create-name').value]);
             }
-            if (document.getElementById('dialog-create-icon-url').innerText.length > 0) {
-                tags.push(['image', document.getElementById('dialog-create-icon-url').innerText]);
+            if (document.getElementById('dialog-create-icon-url').value.length > 0) {
+                tags.push(['image', document.getElementById('dialog-create-icon-url').value]);
             }
             if (document.getElementById('dialog-create-description').innerText.length > 0) {
                 tags.push(['description', document.getElementById('dialog-create-description').innerText]);
             }
             if (document.getElementById('dialog-create-emojis').children.length > 0) {
                 for (let i = 0; i < document.getElementById('dialog-create-emojis').children.length; i++) {
-                    tags.push(['emoji', document.getElementById('dialog-create-emojis').children[i].children[1].innerText, document.getElementById('dialog-create-emojis').children[i].children[0].innerText]);
+                    tags.push(['emoji', document.getElementById('dialog-create-emojis').children[i].children[1].value, document.getElementById('dialog-create-emojis').children[i].children[0].value]);
                 }
             } else {
                 addConsoleContent({status: 'error', message:'このクライアントでは絵文字なしで絵文字セットを作成することはできません。'});
@@ -102,11 +102,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
     });
     document.getElementById('dialog-create-emojis-add').addEventListener('click', function() {
         let block = createElement('div');
-        let url = createElement('p', '絵文字URL*');
-        url.setAttribute('contenteditable', true);
+        let url = createElement('input');
+        url.setAttribute('placeholder', '絵文字URL*');
         block.append(url);
-        let code = createElement('p', 'ショートコード*');
-        code.setAttribute('contenteditable', true);
+        let code = createElement('input');
+        code.setAttribute('placeholder', 'ショートコード*');
         block.append(code);
         document.getElementById('dialog-create-emojis').append(block);
     });
