@@ -155,13 +155,12 @@ class Server {
                     var emojis = tagSearch(data[2].tags, 'a');
                     var emoji_authors = [];
                     var emoji_names = [];
+                    Account.following_emoji_packs = [];
                     if (emojis.length > 0) {
                         for (var i = 0; i < emojis.length; i++) {
                             Account.following_emoji_packs.push(emojis[i][1]);
-                            if (!EmojiPacks.has(emojis[i][1])) {
-                                emoji_authors.push(emojis[i][1].split(':')[1]);
-                                emoji_names.push(emojis[i][1].split(':')[2]);
-                            }
+                            emoji_authors.push(emojis[i][1].split(':')[1]);
+                            emoji_names.push(emojis[i][1].split(':')[2]);
                         }
                     }
                     connection2.add({
@@ -339,7 +338,10 @@ const EMOJI = {
     install(emoji) {
         if (Account.nip_07) {
             var nowdate = Math.floor(new Date().getTime() / 1000);
-            var tags = Account.following_emoji_packs;
+            var tags = [];
+            for (let i = 0; i < Account.following_emoji_packs.length; i++) {
+                tags.push(['a', Account.following_emoji_packs[i]]);
+            }
             tags.push(['a', emoji]);
             window.nostr.signEvent({
                 created_at: nowdate,
