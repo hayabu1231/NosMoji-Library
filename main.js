@@ -328,6 +328,9 @@ class Server {
                     if (titles.length > 0) {
                         pack.name = titles[0][1];
                     }
+                    if (pack.name == '未設定') {
+                        pack.name = pack.id;
+                    }
                     pack.id = `30030:${pack.author.id}:${pack.id}`;
                     var imageS = tagSearch(data[2].tags, 'image');
                     if (imageS.length > 0) {
