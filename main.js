@@ -149,7 +149,7 @@ class Server {
                 if (data[2].kind == 0) {
                     var user = USER.toHYB(data[2]);
                     if (Account.need_users.indexOf(user.id) > -1) {
-                        Account.need_users.splice(accounts.need_users.indexOf(user.id), 1);
+                        Account.need_users.splice(Account.need_users.indexOf(user.id), 1);
                     }
                 } else if (data[2].kind == 10030) {
                     var emojis = tagSearch(data[2].tags, 'a');
@@ -167,7 +167,7 @@ class Server {
                     connection2.add({
                         body: JSON.stringify([
                             'REQ',
-                            `${accounts.emojis_event_id}`,
+                            `${Account.emojis_event_id}`,
                             {
                                 authors: emoji_authors,
                                 '#d': emoji_names,
