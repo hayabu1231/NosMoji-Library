@@ -83,6 +83,7 @@ hr {
     gap: 5px;
     font-weight: bold;
     font-size: 16px;
+    margin: 5px 0;
 }
 
 #console {
@@ -159,6 +160,11 @@ hr {
     object-fit: contain;
     border-radius: 5px;
 }
+.dialog-pack-id {
+    padding: 5px;
+    font-weight: 16px;
+    border-radius: 5px;
+}
 .dialog-pack-author {
     width: 100%;
     overflow: hidden;
@@ -167,6 +173,9 @@ hr {
 .dialog-pack-description {
     padding: 10px 0;
     color: #888;
+}
+#dialog-create-description:empty:after {
+    content: 'セット説明*';
 }
 
 footer {
