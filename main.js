@@ -322,13 +322,13 @@ class Server {
                     }
                     var d = tagSearch(data[2].tags, 'd');
                     if (d.length > 0) {
-                        pack.name = d[0][1];
+                        pack.id = d[0][1];
                     }
                     var titles = tagSearch(data[2].tags, 'title');
                     if (titles.length > 0) {
                         pack.name = titles[0][1];
                     }
-                    pack.id = `30030:${pack.author.id}:${pack.name}`;
+                    pack.id = `30030:${pack.author.id}:${pack.id}`;
                     var imageS = tagSearch(data[2].tags, 'image');
                     if (imageS.length > 0) {
                         pack.icon = imageS[0][1];
