@@ -387,7 +387,7 @@ const USER = {
             avatar: old_user.content.picture,
             timestamp: old_user.created_at * 1000
         };
-        if (!new_user.username) {
+        if (!new_user.name) {
             new_user.name = `${old_user.pubkey.slice(0, 7)}…`;
         }
         if (
