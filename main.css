@@ -71,6 +71,19 @@ hr {
     text-overflow: ellipsis;
     text-align: center;
 }
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #888;
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 2px 14px;
+    gap: 5px;
+    font-weight: bold;
+    font-size: 16px;
+}
 
 #console {
     position: fixed;
@@ -105,7 +118,7 @@ hr {
     font-weight: bold;
     font-size: 16px;
 }
-#dialog-pack_info {
+.dialog {
     position: fixed;
     top: 0;
     left: 0;
@@ -119,7 +132,7 @@ hr {
     background: rgb(255 255 255 / 0.99);
     overflow-x: hidden;
 }
-#dialog-pack_info-menu {
+.dialog-menu {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -127,10 +140,10 @@ hr {
     top: 0;
     padding: 5px;
 }
-#dialog-pack_info-close {
+.dialog-menu-item {
     height: 18px;
 }
-#dialog-pack_info-info {
+.dialog-pack-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -140,18 +153,18 @@ hr {
     gap: 5px;
     border-bottom: solid 0.5px #ddd;
 }
-#dialog-pack_info-icon {
+.dialog-pack-icon {
     height: 100px;
     width: 100px;
     object-fit: contain;
     border-radius: 5px;
 }
-#dialog-pack_info-author {
+.dialog-pack-author {
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-#dialog-pack_info-description {
+.dialog-pack-description {
     padding: 10px 0;
     color: #888;
 }

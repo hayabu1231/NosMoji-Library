@@ -31,12 +31,15 @@
 </main>
 <main id="main-myset">
     <h2>マイ絵文字セット一覧</h2>
+    <p>過去にあなたが作成した絵文字セットを表示しています。</p>
+    <button id="myset-create" class="btn">新しく絵文字セットを作る</button>
     <p id="pack-list-mypack-status"></p>
     <div id="pack-list-mypack" class="pack-list">
     </div>
 </main>
 <main id="main-mylist">
     <h2>マイ絵文字リスト</h2>
+    <p>使用するために絵文字リストに登録済みの絵文字セットを表示しています。</p>
     <p id="pack-list-mylist-status"></p>
     <div id="pack-list-mylist" class="pack-list">
     </div>
@@ -52,18 +55,35 @@
     <br>
     <button id="dialog-login-btn"><img src="img/login.svg">NIP-07拡張機能でログイン</button>
 </dialog>
-<dialog id="dialog-pack_info">
-    <div id="dialog-pack_info-menu">
-        <input id="dialog-pack_info-add" type="image" src="img/add.svg" alt="追加">
-        <input id="dialog-pack_info-close" type="image" src="img/close.svg" alt="閉じる">
+<dialog id="dialog-create" class="dialog">
+    <div class="dialog-menu">
+        <input id="dialog-create-add" class="dialog-menu-item" type="image" src="img/add.svg" alt="追加">
+        <input id="dialog-create-close" class="dialog-menu-item" type="image" src="img/close.svg" alt="閉じる">
     </div>
-    <div id="dialog-pack_info-info">
-        <img id="dialog-pack_info-icon" src="img/NotFound.png">
-        <h3 id="dialog-pack_info-name">セット名</h3>
-        <h4 id="dialog-pack_info-author">作者</h4>
+    <p>*のついているすべての項目について既に入力されてる内容を削除し、入力することをおすすめします。</p>
+    <div class="dialog-pack-info">
+        <img id="dialog-create-icon" src="img/NotFound.png">
+        <h3 id="dialog-create-name" class="dialog-pack-author" contenteditable>セット名*</h3>
+        <p id="dialog-create-id" class="dialog-pack-id" contenteditable>セットID*</p>
+        <h4 id="dialog-create-author" class="dialog-pack-author">作者は送信時のアカウントが自動で読み込まれます。</h4>
     </div>
-    <p id="dialog-pack_info-description">セット説明</p>
-    <small id="dialog-pack_info-emojis" class="pack-list"></small>
+    <p id="dialog-create-description" class="dialog-pack-description" contenteditable>セット説明*</p>
+    <div id="dialog-create-emojis">
+    </div>
+    <button id="dialog-create-emojis-add" class="btn">セットに絵文字を追加</button>
+</dialog>
+<dialog id="dialog-pack_info" class="dialog">
+    <div class="dialog-menu">
+        <input id="dialog-pack_info-add" class="dialog-menu-item" type="image" src="img/add.svg" alt="追加">
+        <input id="dialog-pack_info-close" class="dialog-menu-item" type="image" src="img/close.svg" alt="閉じる">
+    </div>
+    <div class="dialog-pack-info">
+        <img id="dialog-pack_info-icon" class="dialog-pack-icon" src="img/NotFound.png">
+        <h3 id="dialog-pack_info-name" class="dialog-pack-name">セット名</h3>
+        <h4 id="dialog-pack_info-author" class="dialog-pack-author">作者</h4>
+    </div>
+    <p id="dialog-pack_info-description" class="dialog-pack-description">セット説明</p>
+    <div id="dialog-pack_info-emojis" class="pack-list"></small>
 </dialog>
 
 <div id="console"></div>

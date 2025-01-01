@@ -43,6 +43,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
         });
         document.getElementById('open-' + Pages[i].id).dataset.id = Pages[i].id;
     }
+    document.getElementById('myset-create').addEventListener('click', function() {
+        document.getElementById('dialog-create').show();
+    });
     document.getElementById('dialog-login-btn').addEventListener('click', function() {
         if (window.nostr) {
             window.nostr.getPublicKey().then((pubkey) => {
@@ -54,6 +57,57 @@ document.addEventListener("DOMContentLoaded", (event) => {
         } else {
             addConsoleContent({status: 'error', message:'NIP-07の拡張機能が認識できませんでした。'});
         }
+    });
+    document.getElementById('dialog-create-close').addEventListener('click', function() {
+        document.getElementById('dialog-create').close();
+    });
+    document.getElementById('dialog-create-add').addEventListener('click', function() {
+        if (Account.nip_07) {
+            var nowdate = Math.floor(new Date().getTime() / 1000);
+            var tags = [];
+            if (document.getElementById('dialog-create-id').innerText.length > 0) {
+                tags.push(['d', document.getElementById('dialog-create-id').innerText]);
+            }
+            if (document.getElementById('dialog-create-name').innerText.length > 0) {
+                tags.push(['title', document.getElementById('dialog-create-name').innerText]);
+            }
+            /*
+            if (document.getElementById('dialog-create-icon').innerText.length > 0) {
+                tags.push(['image', document.getElementById('dialog-create-icon').innerText]);
+            }
+            */
+            if (document.getElementById('dialog-create-description').innerText.length > 0) {
+                tags.push(['description', document.getElementById('dialog-create-description').innerText]);
+            }
+            if (document.getElementById('dialog-create-emojis').children.length > 0) {
+                for (let i = 0; i < document.getElementById('dialog-create-emojis').children.length; i++) {
+                    tags.push(['emoji', document.getElementById('dialog-create-emojis').children[i].children[0].innerText, document.getElementById('dialog-create-emojis').children[i].children[1].innerText]);
+                }
+            } else {
+                addConsoleContent({status: 'error', message:'このクライアントでは絵文字なしで絵文字セットを作成することはできません。'});
+                return;
+            }
+            window.nostr.signEvent({
+                created_at: nowdate,
+                kind: 30030,
+                tags: tags,
+                content: ''
+            }).then(function (event) {
+                connection2.add({body: JSON.stringify(['EVENT', event])});
+            });
+        } else {
+            addConsoleContent({status: 'error', message:'NIP-07の拡張機能が認識できませんでした。'});
+        }
+    });
+    document.getElementById('dialog-create-emojis-add').addEventListener('click', function() {
+        let block = createElement('div');
+        let url = createElement('p', '絵文字URL*');
+        url.setAttribute('contenteditable', true);
+        block.append(url);
+        let code = createElement('p', 'ショートコード*');
+        code.setAttribute('contenteditable', true);
+        block.append(code);
+        document.getElementById('dialog-create-emojis').append(block);
     });
     document.getElementById('dialog-pack_info-add').addEventListener('click', function() {
         if (this.dataset.status == 'unadded') {
