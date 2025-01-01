@@ -142,7 +142,32 @@ function createPackElement(pack, list) {
     element.append(createElement('img', pack.icon, 'list-pack-icon'));
     element.append(createElement('p', pack.name, 'list-pack-name'));
     element.append(createElement('small', pack.author.name, 'list-pack-author'));
-     return element;
+    return element;
+}
+
+function setEmojiPack(pack) {
+    EmojiPacks.set(`30030:${pack.name}:${pack.author.id}`, pack);
+    if (document.getElementById(`30030:${pack.name}:${pack.author.id}-new`)) {
+        document.getElementById(`30030:${pack.name}:${pack.author.id}-new`).replaceWith(createPackElement(pack, 'new'));
+    } else {
+        document.getElementById('pack-list-new').append(createPackElement(pack, 'new'));
+    }
+    if (
+        Account.npub_converted == pack.author.id &&
+        document.getElementById(`30030:${pack.name}:${pack.author.id}-myset`)
+    ) {
+        document.getElementById(`30030:${pack.name}:${pack.author.id}-myset`).replaceWith(createPackElement(pack, 'myset'));
+    } else if (Account.npub_converted == pack.author.id) {
+        document.getElementById('pack-list-myset').append(createPackElement(pack, 'myset'));
+    }
+    if (
+        Account.following_emoji_packs.includes(`30030:${pack.name}:${pack.author.id}`) &&
+        document.getElementById(`30030:${pack.name}:${pack.author.id}-mylist`)
+    ) {
+        document.getElementById(`30030:${pack.name}:${pack.author.id}-mylist`).replaceWith(createPackElement(pack, 'mylist'));
+    } else if (Account.following_emoji_packs.includes(`30030:${pack.name}:${pack.author.id}`)) {
+        document.getElementById('pack-list-mylist').append(createPackElement(pack, 'mylist'));
+    }
 }
 
 class Server {
@@ -174,8 +199,12 @@ class Server {
                     if (emojis.length > 0) {
                         for (var i = 0; i < emojis.length; i++) {
                             Account.following_emoji_packs.push(emojis[i][1]);
-                            emoji_authors.push(emojis[i][1].split(':')[1]);
-                            emoji_names.push(emojis[i][1].split(':')[2]);
+                            if (Packs.has(emojis[i][1])) {
+                                setEmojiPack(Packs.get(emojis[i][1]));
+                            } else {
+                                emoji_authors.push(emojis[i][1].split(':')[1]);
+                                emoji_names.push(emojis[i][1].split(':')[2]);
+                            }
                         }
                     }
                     connection2.add({
@@ -231,28 +260,7 @@ class Server {
                         if (!pack.icon) {
                             pack.icon = pack.emojis[0].url;
                         }
-                        EmojiPacks.set(`30030:${pack.name}:${pack.author.id}`, pack);
-                        if (document.getElementById(`30030:${pack.name}:${pack.author.id}-new`)) {
-                            document.getElementById(`30030:${pack.name}:${pack.author.id}-new`).replaceWith(createPackElement(pack, 'new'));
-                        } else {
-                            document.getElementById('pack-list-new').append(createPackElement(pack, 'new'));
-                        }
-                        if (
-                            Account.npub_converted == pack.author.id &&
-                            document.getElementById(`30030:${pack.name}:${pack.author.id}-myset`)
-                        ) {
-                            document.getElementById(`30030:${pack.name}:${pack.author.id}-myset`).replaceWith(createPackElement(pack, 'myset'));
-                        } else if (Account.npub_converted == pack.author.id) {
-                            document.getElementById('pack-list-myset').append(createPackElement(pack, 'myset'));
-                        }
-                        if (
-                            Account.following_emoji_packs.includes(`30030:${pack.name}:${pack.author.id}`) &&
-                            document.getElementById(`30030:${pack.name}:${pack.author.id}-mylist`)
-                        ) {
-                            document.getElementById(`30030:${pack.name}:${pack.author.id}-mylist`).replaceWith(createPackElement(pack, 'mylist'));
-                        } else if (Account.following_emoji_packs.includes(`30030:${pack.name}:${pack.author.id}`)) {
-                            document.getElementById('pack-list-mylist').append(createPackElement(pack, 'mylist'));
-                        }
+                        setEmojiPack(pack);
                     }
                 }
             } else if (data[0] == 'NOTICE') {
@@ -401,28 +409,7 @@ const USER = {
         EmojiPacks.forEach((pack) => {
             if (pack.author.id == new_user.id) {
                 pack.author = new_user;
-                EmojiPacks.set(`30030:${pack.name}:${pack.author.id}`, pack);
-                if (document.getElementById(`30030:${pack.name}:${pack.author.id}-new`)) {
-                    document.getElementById(`30030:${pack.name}:${pack.author.id}-new`).replaceWith(createPackElement(pack, 'new'));
-                } else {
-                    document.getElementById('pack-list-new').append(createPackElement(pack, 'new'));
-                }
-                if (
-                    Account.npub_converted == pack.author.id &&
-                    document.getElementById(`30030:${pack.name}:${pack.author.id}-myset`)
-                ) {
-                    document.getElementById(`30030:${pack.name}:${pack.author.id}-myset`).replaceWith(createPackElement(pack, 'myset'));
-                } else if (Account.npub_converted == pack.author.id) {
-                    document.getElementById('pack-list-myset').append(createPackElement(pack, 'myset'));
-                }
-                if (
-                    Account.following_emoji_packs.includes(`30030:${pack.name}:${pack.author.id}`) &&
-                    document.getElementById(`30030:${pack.name}:${pack.author.id}-mylist`)
-                ) {
-                    document.getElementById(`30030:${pack.name}:${pack.author.id}-mylist`).replaceWith(createPackElement(pack, 'mylist'));
-                } else if (Account.following_emoji_packs.includes(`30030:${pack.name}:${pack.author.id}`)) {
-                    document.getElementById('pack-list-mylist').append(createPackElement(pack, 'mylist'));
-                }
+                setEmojiPack(pack);
             }
         });
         return new_user;
