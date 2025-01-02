@@ -164,6 +164,7 @@ hr {
     padding: 5px;
     font-weight: 16px;
     border-radius: 5px;
+    border: solid 1px #ddd;
 }
 .dialog-pack-author {
     width: 100%;
@@ -176,6 +177,29 @@ hr {
 }
 #dialog-create-description:empty:after {
     content: 'セット説明*';
+}
+.dialog-create-emoji {
+    display: grid;
+    justify-content: center
+    align-items: center;
+    padding: 5px;
+    font-weight: 16px;
+    border: solid 1px #ddd;
+    border-radius: 10px;
+    gap: 5px;
+    margin: 10px 0;
+}
+.dialog-create-emoji-url {
+    padding: 5px;
+    font-weight: 16px;
+    border-radius: 5px;
+    border: solid 1px #ddd;
+}
+.dialog-create-emoji-code {
+    padding: 5px;
+    font-weight: 16px;
+    border-radius: 5px;
+    border: solid 1px #ddd;
 }
 
 footer {

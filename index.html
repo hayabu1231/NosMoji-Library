@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>NosMoji Library</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-    <script src="main.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css?">
+    <script src="main.js?"></script>
 </head>
 <body>
 <header>
@@ -59,7 +59,17 @@
         <input id="dialog-create-add" class="dialog-menu-item" type="image" src="img/add.svg" alt="追加">
         <input id="dialog-create-close" class="dialog-menu-item" type="image" src="img/close.svg" alt="閉じる">
     </div>
-    <p>*のついているすべての項目について既に入力されてる内容を削除し、入力することをおすすめします。</p>
+    <p>
+        *のついているすべての項目について入力することをおすすめします。
+    </p>
+    <details>
+        <summary>項目について</summary>
+        セット名は過去のものと重複しても大丈夫です。<br>
+        セットIDに関しては自分が以前作ったものと被らないようにしてください。<br>
+        （他人のパックとIDが被るのは問題ありません。）<br>
+        各画像については他のサービスでアップロードしたもののリンクを貼り付けてください。<br>
+        （このサービスでは現在お手持ちの画像をアップロードする機能はありません。）
+    </details>
     <div class="dialog-pack-info">
         <img id="dialog-create-icon" class="dialog-pack-icon" src="img/NotFound.png">
         <input id="dialog-create-icon-url" class="dialog-pack-id" placeholder="アイコンURL*">

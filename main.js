@@ -102,13 +102,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
         document.getElementById('dialog-create-icon').src = document.getElementById('dialog-create-icon-url').innerText;
     });
     document.getElementById('dialog-create-emojis-add').addEventListener('click', function() {
-        let block = createElement('div');
-        let url = createElement('input');
+        let block = createElement('div', null, 'dialog-create-emoji');
+        let url = createElement('input', null, 'dialog-create-emoji-url');
         url.setAttribute('placeholder', '絵文字URL*');
         block.append(url);
-        let code = createElement('input');
+        let code = createElement('input', null, 'dialog-create-emoji-code');
         code.setAttribute('placeholder', 'ショートコード*');
         block.append(code);
+        let delbtn = createElement('button', 'この絵文字を消す', 'btn', function() {
+            this.parentElement.remove();
+        });
+        block.append(delbtn);
         document.getElementById('dialog-create-emojis').append(block);
     });
     document.getElementById('dialog-pack_info-add').addEventListener('click', function() {
